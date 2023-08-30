@@ -1,7 +1,5 @@
 <script setup></script>
 
 <template>
-  <main>
-    <h1>hello</h1>
-  </main>
+  <p>welcome</p>
 </template>

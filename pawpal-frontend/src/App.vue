@@ -84,7 +84,9 @@
         </a>
       </div>
     </nav>
-    <main class="px-8 py-6 bg-stone-100 flex-1">
+    <main
+      class="px-8 py-6 bg-stone-100 flex-1 justify-center items-center align"
+    >
       <RouterView />
     </main>
   </div>
