@@ -8,11 +8,12 @@
         class="object-scale-down justify-center h-32 w-32"
       />
 
-      <h1 class="mb-6 text-center text-2xl">Sign up</h1>
+      <h1 class="mb-6 text-center text-2xl">Log in</h1>
       <p class="font-bold">
-        Already have an account?<span class="text-blue-900 underline">
-          <RouterLink to="/login"> Log in</RouterLink></span
-        >
+        Don't have an account?
+        <span class="text-blue-900 underline">
+          <RouterLink to="/signup"> Sign up</RouterLink>
+        </span>
       </p>
 
       <form class="py-5 w-4/5 space-y-4">
@@ -40,14 +41,6 @@
           />
         </div>
 
-        <div>
-          <input
-            type="password"
-            placeholder="Confirm password"
-            class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
-          />
-        </div>
-
         <template>
           <div class="bg-red-300 text-white rounded-2xl p-6">
             <p></p>
@@ -58,7 +51,7 @@
           <button
             class="my-3 py-4 w-full px-6 bg-blue-900 hover:bg-blue-950 text-white rounded-2xl"
           >
-            Sign up
+            Login
           </button>
         </div>
       </form>
