@@ -11,7 +11,22 @@
     </div>
 
     <div class="main-right col-span-1 space-y-4">
-      <p>sidebar with people and trends</p>
+      <RecommendedPeople />
+      <Trends />
     </div>
   </div>
 </template>
+
+<script>
+import RecommendedPeople from "../components/RecommendedPeople.vue";
+import Trends from "../components/Trends.vue";
+
+export default {
+  name: "FeedView",
+
+  components: {
+    RecommendedPeople,
+    Trends,
+  },
+};
+</script>
