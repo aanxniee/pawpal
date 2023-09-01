@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# using custom user model
+AUTH_USER_MODEL = 'account.User'
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
@@ -42,7 +45,7 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_PERMISSION_CLASSES': {
         'rest_framework.permissions.isAuthenticated',
-    }  
+    }
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -63,6 +66,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -148,4 +152,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
