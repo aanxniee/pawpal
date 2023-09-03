@@ -68,7 +68,81 @@
 
 <script>
 import axios from "axios";
+import { useToastStore } from "@/stores/toast";
+
 export default {
-  setup() {},
+  setup() {
+    const toastStore = userToastStore();
+    return {
+      toastStore,
+    };
+  },
+
+  data() {
+    return {
+      form: {
+        email: "",
+        name: "",
+        password1: "",
+        password2: "",
+      },
+      errors: [],
+    };
+  },
+
+  methods: {
+    submitForm() {
+      this.errors = [];
+
+      if (this.form.email === "") {
+        this.errors.push("Invalid email!");
+      }
+
+      if (this.form.name === "") {
+        this.errors.push("Invalid name!");
+      }
+
+      if (this.form.password1 === "") {
+        this.errors.push("Invalid password!");
+      }
+
+      if (this.form.password1 !== this.form.password2) {
+        this.errors.push("Passwords do not match!");
+      }
+
+      if (this.errors.length === 0) {
+        axios
+          .post("/api/signup/", this.form)
+          .then((response) => {
+            if (response.data.message === "success") {
+              this.toastStore.showToast(
+                5000,
+                "You have been successfully registered. Please check your email for activation.",
+                "bg-emerald-500"
+              );
+
+              this.form.email = "";
+              this.form.name = "";
+              this.form.password1 = "";
+              this.form.password2 = "";
+            } else {
+              const data = JSON.parse(response.data.message);
+              for (const key in data) {
+                this.errors.push(data[key][0].message);
+              }
+
+              this.toastStore.showToast(
+                5000,
+                "Something went wrong. Please try again",
+                "bg-red-300"
+              );
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }
+    },
+  },
 };
 </script>
