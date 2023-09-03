@@ -53,7 +53,7 @@
         </div>
 
         <template v-if="errors.length > 0">
-          <div class="bg-red-800 text-white rounded-2xl px-6 py-4">
+          <div class="text-red-800">
             <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
         </template>

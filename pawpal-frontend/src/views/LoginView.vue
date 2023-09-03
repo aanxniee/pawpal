@@ -16,18 +16,11 @@
         </span>
       </p>
 
-      <form class="py-5 w-4/5 space-y-4">
-        <div>
-          <input
-            type="text"
-            placeholder="Full name"
-            class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
-          />
-        </div>
-
+      <form class="py-5 w-4/5 space-y-4" v-on:submit.prevent="submitForm">
         <div>
           <input
             type="email"
+            v-model="form.email"
             placeholder="Email address"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
@@ -36,14 +29,15 @@
         <div>
           <input
             type="password"
+            v-model="form.password"
             placeholder="Password"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
         </div>
 
-        <template>
-          <div class="bg-red-300 text-white rounded-2xl p-6">
-            <p></p>
+        <template v-if="errors.length > 0">
+          <div class="text-red-800">
+            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
         </template>
 
@@ -58,3 +52,53 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+import { useUserStore } from "@/stores/user";
+import { useToastStore } from "@/stores/toast";
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    return {
+      userStore,
+    };
+  },
+
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+      errors: [],
+    };
+  },
+
+  methods: {
+    submitForm() {
+      this.errors = [];
+
+      if (this.form.email === "") {
+        this.errors.push("Invalid email!");
+      }
+
+      if (this.form.password === "") {
+        this.errors.push("Invalid password!");
+      }
+
+      if (this.errors.length === 0) {
+        axios
+          .post("/api/login/", this.form)
+          .then((response) => {
+            this.store.setToken(response.data);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }
+    },
+  },
+};
+</script>
