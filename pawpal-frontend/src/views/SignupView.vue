@@ -122,7 +122,7 @@ export default {
               this.toastStore.showToast(
                 5000,
                 "You have been successfully registered. Please check your email for activation.",
-                "bg-emerald-500"
+                "bg-green-500"
               );
 
               this.form.email = "";
