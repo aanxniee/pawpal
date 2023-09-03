@@ -15,10 +15,11 @@
         >
       </p>
 
-      <form class="py-5 w-4/5 space-y-4">
+      <form class="py-5 w-4/5 space-y-4" v-on:submit.prevent="submitForm">
         <div>
           <input
             type="text"
+            v-model="form.name"
             placeholder="Full name"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
@@ -27,6 +28,7 @@
         <div>
           <input
             type="email"
+            v-model="form.email"
             placeholder="Email address"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
@@ -35,6 +37,7 @@
         <div>
           <input
             type="password"
+            v-model="form.password1"
             placeholder="Password"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
@@ -43,14 +46,15 @@
         <div>
           <input
             type="password"
+            v-model="form.password2"
             placeholder="Confirm password"
             class="w-full bg-stone-100 mt-2 py-4 px-6 border border-gray-300 rounded-2xl"
           />
         </div>
 
-        <template>
-          <div class="bg-red-300 text-white rounded-2xl p-6">
-            <p></p>
+        <template v-if="errors.length > 0">
+          <div class="bg-red-800 text-white rounded-2xl px-6 py-4">
+            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
         </template>
 
@@ -72,7 +76,7 @@ import { useToastStore } from "@/stores/toast";
 
 export default {
   setup() {
-    const toastStore = userToastStore();
+    const toastStore = useToastStore();
     return {
       toastStore,
     };
@@ -134,7 +138,7 @@ export default {
               this.toastStore.showToast(
                 5000,
                 "Something went wrong. Please try again",
-                "bg-red-300"
+                "bg-red-800"
               );
             }
           })

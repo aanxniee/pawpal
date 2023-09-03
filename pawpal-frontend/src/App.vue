@@ -90,4 +90,17 @@
       <RouterView />
     </main>
   </div>
+
+  <Toast />
 </template>
+
+<script>
+import axios from "axios";
+import Toast from "@/components/Toast.vue";
+
+export default {
+  components: {
+    Toast,
+  },
+};
+</script>
