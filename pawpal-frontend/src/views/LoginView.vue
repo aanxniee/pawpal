@@ -56,7 +56,6 @@
 <script>
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
-import { useToastStore } from "@/stores/toast";
 
 export default {
   setup() {
@@ -77,7 +76,7 @@ export default {
   },
 
   methods: {
-    submitForm() {
+    async submitForm() {
       this.errors = [];
 
       if (this.form.email === "") {
@@ -89,10 +88,28 @@ export default {
       }
 
       if (this.errors.length === 0) {
-        axios
+        console.log(this.form);
+        await axios
           .post("/api/login/", this.form)
           .then((response) => {
-            this.store.setToken(response.data);
+            this.userStore.setToken(response.data);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + response.data.access;
+          })
+          .catch((error) => {
+            console.log("error", error);
+            this.errors.push(
+              "The email or password is incorrect or the user is not activated."
+            );
+          });
+      }
+
+      if (this.errors.length === 0) {
+        await axios
+          .get("/api/getuserinfo/")
+          .then((response) => {
+            this.userStore.setUserInfo(response.data);
+            this.$router.push("/feed");
           })
           .catch((error) => {
             console.log("error", error);
