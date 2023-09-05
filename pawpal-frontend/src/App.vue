@@ -9,7 +9,10 @@
         /></a>
       </div>
 
-      <div class="menu-center align-middle flex flex-col gap-5 space-y-4">
+      <div
+        class="menu-center align-middle flex flex-col gap-5 space-y-4"
+        v-if="userStore.user.isAuthenticated"
+      >
         <RouterLink to="/feed" class="text-blue-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,9 +82,23 @@
       </div>
 
       <div class="menu-bottom">
-        <a href="#">
-          <img src="logo.svg" class="rounded-full" />
-        </a>
+        <template v-if="userStore.user.isAuthenticated">
+          <a href="#">
+            <img src="logo.svg" class="rounded-full" />
+          </a>
+        </template>
+        <template v-else>
+          <RouterLink
+            to="/login"
+            class="mr-4 py-4 px-6 bg-red-800 text-white rounded-2xl"
+            >Log in</RouterLink
+          >
+          <RouterLink
+            to="/signup"
+            class="py-4 px-6 bg-blue-800 text-white rounded-2xl"
+            >Sign up</RouterLink
+          >
+        </template>
       </div>
     </nav>
     <main
