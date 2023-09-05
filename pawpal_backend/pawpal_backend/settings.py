@@ -40,20 +40,22 @@ SIMPLE_JWT = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    },
-    'DEFAULT_PERMISSION_CLASSES': {
-        'rest_framework.permissions.isAuthenticated',
-    }
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5173",
+    "http://localhost:5173",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:5173",
+    "http://localhost:5173",
 ]
 
 INSTALLED_APPS = [
@@ -67,6 +69,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'account',
+    'posts',
 ]
 
 MIDDLEWARE = [
