@@ -1,6 +1,17 @@
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-center col-span-3 space-y-4">
+    <div class="main-left col-span-1">
+      <div
+        class="p-4 bg-stone-100 border border-gray-300 text-center rounded-2xl"
+      >
+        <img src="logo_pawpal.svg" class="mb-6 rounded-full" />
+
+        <p>
+          <strong>{{ user.name }}</strong>
+        </p>
+      </div>
+    </div>
+    <div class="main-center col-span-2 space-y-4">
       <form
         v-on:submit.prevent="submitForm"
         method="post"
@@ -69,7 +80,9 @@ export default {
   data() {
     return {
       posts: [],
-      body: "",
+      user: {
+        id: "",
+      },
     };
   },
 
@@ -80,10 +93,11 @@ export default {
   methods: {
     getFeed() {
       axios
-        .get("/api/posts/")
+        .get(`/api/posts/profile/${this.$route.params.id}/`)
         .then((response) => {
           console.log("data", response.data);
-          this.posts = response.data;
+          this.posts = response.data.posts;
+          this.user = response.data.user;
         })
         .catch((error) => {
           console.log("error", error);
