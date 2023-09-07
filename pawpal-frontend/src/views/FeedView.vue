@@ -10,6 +10,10 @@
         v-for="post in posts"
         v-bind:key="post.id"
       >
+        <strong>
+          <p>{{ post.created_by.name }}</p>
+        </strong>
+        <p class="text-gray-600">{{ post.created_at_formatted }} ago</p>
         <p>{{ post.body }}</p>
       </div>
     </div>
