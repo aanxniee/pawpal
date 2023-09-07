@@ -5,8 +5,12 @@
         <p>create a posting</p>
       </div>
 
-      <div class="p-4 bg-stone-100 border border-gray-200 rounded-lg">
-        <p>a post</p>
+      <div
+        class="p-4 bg-stone-100 border border-gray-200 rounded-lg"
+        v-for="post in posts"
+        v-bind:key="post.id"
+      >
+        <p>{{ post.body }}</p>
       </div>
     </div>
 
@@ -18,6 +22,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import RecommendedPeople from "../components/RecommendedPeople.vue";
 import Trends from "../components/Trends.vue";
 
@@ -27,6 +32,31 @@ export default {
   components: {
     RecommendedPeople,
     Trends,
+  },
+
+  data() {
+    return {
+      posts: [],
+      body: "",
+    };
+  },
+
+  mounted() {
+    this.getFeed();
+  },
+
+  methods: {
+    getFeed() {
+      axios
+        .get("/api/posts/")
+        .then((response) => {
+          console.log("data", response.data);
+          this.posts = response.data;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
   },
 };
 </script>
