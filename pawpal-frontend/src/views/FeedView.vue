@@ -1,12 +1,28 @@
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-center col-span-3 space-y-4">
-      <div class="p-4 bg-stone-100 border border-gray-200 rounded-lg">
-        <p>create a posting</p>
-      </div>
+      <form
+        v-on:submit.prevent="submitForm"
+        method="post"
+        class="border border-gray-300 p-6 rounded-3xl"
+      >
+        <textarea
+          v-model="body"
+          class="p-4 w-full bg-stone-100 rounded-2xl border border-gray-300"
+          placeholder="What's happening?"
+        ></textarea>
+
+        <div class="py-2 border-t border-gray-100 flex justify-between">
+          <button
+            class="inline-block py-4 px-6 bg-blue-800 text-white rounded-2xl"
+          >
+            Post
+          </button>
+        </div>
+      </form>
 
       <div
-        class="p-4 bg-stone-100 border border-gray-200 rounded-lg"
+        class="p-4 bg-stone-100 border border-gray-300 rounded-2xl"
         v-for="post in posts"
         v-bind:key="post.id"
       >
@@ -56,6 +72,27 @@ export default {
         .then((response) => {
           console.log("data", response.data);
           this.posts = response.data;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+
+    submitForm() {
+      console.log("submitForm", this.body);
+
+      let formData = new FormData();
+      formData.append("body", this.body);
+
+      axios
+        .post("/api/posts/create/", formData, {
+          body: this.body,
+        })
+        .then((response) => {
+          console.log("data", response.data);
+
+          this.posts.unshift(response.data);
+          this.body = "";
         })
         .catch((error) => {
           console.log("error", error);
