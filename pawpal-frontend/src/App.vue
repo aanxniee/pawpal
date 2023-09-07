@@ -82,10 +82,12 @@
       </div>
 
       <div class="menu-bottom">
-        <template v-if="userStore.user.isAuthenticated">
-          <a href="#">
-            <img src="logo.svg" class="rounded-full" />
-          </a>
+        <template v-if="userStore.user.isAuthenticated && userStore.user.id">
+          <RouterLink
+            :to="{ name: 'profile', params: { id: userStore.user.id } }"
+          >
+            <img :src="userStore.user.avatar" class="rounded-full" />
+          </RouterLink>
         </template>
         <template v-else>
           <RouterLink
