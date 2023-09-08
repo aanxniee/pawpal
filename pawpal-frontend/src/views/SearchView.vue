@@ -9,7 +9,6 @@
             placeholder="Search..."
             v-model="query"
           />
-
           <button
             class="inline-block py-4 px-6 bg-blue-900 text-white rounded-2xl"
           >
@@ -30,7 +29,6 @@
           </button>
         </form>
       </div>
-
       <div
         class="p-4 bg-stone-100 border border-gray-300 rounded-3xl grid grid-cols-4 gap-4"
         v-if="users.length"
@@ -51,17 +49,12 @@
           </p>
         </div>
       </div>
-
       <div
         class="p-4 bg-stone-100 border border-gray-300 rounded-2xl"
         v-for="post in posts"
         v-bind:key="post.id"
       >
-        <strong>
-          <p>{{ post.created_by.name }}</p>
-        </strong>
-        <p class="text-gray-600">{{ post.created_at_formatted }} ago</p>
-        <p>{{ post.body }}</p>
+        <PostItem v-bind:post="post" />
       </div>
     </div>
 
@@ -76,6 +69,7 @@
 import RecommendedPeople from "../components/RecommendedPeople.vue";
 import Trends from "../components/Trends.vue";
 import axios from "axios";
+import PostItem from "../components/PostItem.vue";
 
 export default {
   name: "SearchView",
@@ -83,6 +77,7 @@ export default {
   components: {
     RecommendedPeople,
     Trends,
+    PostItem,
   },
 
   data() {
