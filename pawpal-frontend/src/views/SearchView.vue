@@ -33,20 +33,35 @@
 
       <div
         class="p-4 bg-stone-100 border border-gray-300 rounded-3xl grid grid-cols-4 gap-4"
+        v-if="users.length"
       >
-        <div class="p-4 text-center border border-gray-300 rounded-2xl">
-          <img src="" class="mb-6 rounded-full" />
+        <div
+          class="p-4 text-center border border-gray-300 rounded-2xl"
+          v-for="user in users"
+          v-bind:key="user.id"
+        >
+          <img src="logo.svg" class="mb-6 rounded-full" />
 
           <p>
             <strong>
-              <p>friend card</p>
+              <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{
+                user.name
+              }}</RouterLink>
             </strong>
           </p>
         </div>
       </div>
 
-      <div class="p-4 bg-stone-100 border border-gray-300 rounded-3xl">
-        <p>all posts</p>
+      <div
+        class="p-4 bg-stone-100 border border-gray-300 rounded-2xl"
+        v-for="post in posts"
+        v-bind:key="post.id"
+      >
+        <strong>
+          <p>{{ post.created_by.name }}</p>
+        </strong>
+        <p class="text-gray-600">{{ post.created_at_formatted }} ago</p>
+        <p>{{ post.body }}</p>
       </div>
     </div>
 
@@ -74,6 +89,7 @@ export default {
     return {
       query: "",
       users: [],
+      posts: [],
     };
   },
 
@@ -87,6 +103,9 @@ export default {
         })
         .then((response) => {
           console.log("response:", response.data);
+
+          this.users = response.data.users;
+          this.posts = response.data.posts;
         })
         .catch((error) => {
           console.log("error:", error);
