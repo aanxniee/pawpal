@@ -14,6 +14,7 @@
     <div class="main-center col-span-2 space-y-4">
       <form
         v-on:submit.prevent="submitForm"
+        v-if="userStore.user.id === user.id"
         method="post"
         class="border border-gray-300 p-6 rounded-3xl"
       >
