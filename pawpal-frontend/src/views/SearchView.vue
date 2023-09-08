@@ -2,11 +2,12 @@
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-3 space-y-4">
       <div class="bg-stone-100 border border-gray-300 rounded-3xl">
-        <form class="p-4 flex space-x-4">
+        <form class="p-4 flex space-x-4" v-on:submit.prevent="submitForm">
           <input
             type="search"
-            class="p-4 w-full border border-gray-300 bg-stone-100 rounded-2xl"
+            class="p-4 w-full bg-stone-100 rounded-2xl border border-gray-300"
             placeholder="Search..."
+            v-model="query"
           />
 
           <button
@@ -59,6 +60,7 @@
 <script>
 import RecommendedPeople from "../components/RecommendedPeople.vue";
 import Trends from "../components/Trends.vue";
+import axios from "axios";
 
 export default {
   name: "SearchView",
@@ -66,6 +68,30 @@ export default {
   components: {
     RecommendedPeople,
     Trends,
+  },
+
+  data() {
+    return {
+      query: "",
+      users: [],
+    };
+  },
+
+  methods: {
+    submitForm() {
+      console.log("submitForm");
+
+      axios
+        .post("/api/search/", {
+          query: this.query,
+        })
+        .then((response) => {
+          console.log("response:", response.data);
+        })
+        .catch((error) => {
+          console.log("error:", error);
+        });
+    },
   },
 };
 </script>
