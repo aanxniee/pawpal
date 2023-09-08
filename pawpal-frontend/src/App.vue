@@ -86,20 +86,22 @@
           <RouterLink
             :to="{ name: 'profile', params: { id: userStore.user.id } }"
           >
-            <img :src="userStore.user.avatar" class="rounded-full" />
+            <img src="logo.svg" class="rounded-full" />
           </RouterLink>
         </template>
         <template v-else>
-          <RouterLink
-            to="/login"
-            class="mr-4 py-4 px-6 bg-red-800 text-white rounded-2xl"
-            >Log in</RouterLink
-          >
-          <RouterLink
-            to="/signup"
-            class="py-4 px-6 bg-blue-800 text-white rounded-2xl"
-            >Sign up</RouterLink
-          >
+          <div class="flex flex-col gap-4">
+            <RouterLink
+              to="/login"
+              class="py-2 px-4 bg-red-800 text-white rounded-2xl text-center"
+              >Log in</RouterLink
+            >
+            <RouterLink
+              to="/signup"
+              class="py-2 px-4 bg-blue-800 text-white rounded-2xl w-max text-center"
+              >Sign up</RouterLink
+            >
+          </div>
         </template>
       </div>
     </nav>
